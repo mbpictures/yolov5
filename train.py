@@ -126,11 +126,13 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
     # Freeze
     freeze_start = 0 if len(freeze) == 1 else freeze[0]
     freeze_end = freeze[0] if len(freeze) == 1 else freeze[1]
+    print(f'Freeze Start: {freeze_start}, Freeze end: {freeze_end}')
     freeze = [f'model.{x}.' for x in range(freeze_start, freeze_end)]  # layers to freeze
     for k, v in model.named_parameters():
         v.requires_grad = True  # train all layers
         if any(x in k for x in freeze):
             LOGGER.info(f'freezing {k}')
+            print(f'freezing {k}')
             v.requires_grad = False
 
     # Image size
